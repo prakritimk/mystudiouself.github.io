@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Studious Elf | Cursors</title>
+      
+      <link rel="icon" href="finalog.jpg" sizes="80x60" type="image/jpg">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" type="text/css" href="css.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing Script">
+           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Overlock">
+      
+      <style>
+           p{
+              font-family: 'Overlock';
+          }
+</style>
+         <style> 
+              p1{
+              font-family: 'Overlock';
+          }
+           </style> 
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+ </head>
+    <body style="background-color:bisque;">
+      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+      <nav>
+          <ul class="menu">
+          <li class="item button"><a href="signup.html"> Sign Up</a></li>
+           <li class="item button"><a href="signin.html"> Sign In</a></li>
+           <li class="item button"><a href="index.html.html">Home </a></li>
+            <li class="item button"><a href="trigggers.html">Triggers</a></li
+              <li class="toggle"><span class="bars"></span>
+              </li>
+          </ul>
+      </nav>
+        
+        <h1 style="font-family:Dancing Script;font-size:300%; text-align: center">CURSORS</h1>
+        
+        <div class=cursors>
+        
+            <p style="text-align:justify">
+In computer science, a database cursor is a control structure that enables traversal over the records in a database. Cursors facilitate subsequent processing in conjunction with the traversal, such as retrieval, addition and removal of database records. The database cursor characteristic of traversal makes cursors akin to the programming language concept of iterator.<br>
+<br>
+Cursors are used by database programmers to process individual rows returned by database system queries. Cursors enable manipulation of whole result sets at once. In this scenario, a cursor enables the sequential processing of rows in a result set.<br>
+
+In SQL procedures, a cursor makes it possible to define a result set (a set of data rows) and perform complex logic on a row by row basis. By using the same mechanics, a SQL procedure can also define a result set and return it directly to the caller of the SQL procedure or to a client application.<br>
+
+A cursor can be viewed as a pointer to one row in a set of rows. The cursor can only reference one row at a time, but can move to other rows of the result set as needed.<br>
+Usage:<br>
+To use cursors in SQL procedures, you need to do the following:<br>
+
+1.Declare a cursor that defines a result set.<br>
+2.Open the cursor to establish the result set.<br>
+3.Fetch the data into local variables as needed from the cursor, one row at a time.<br>
+4.Close the cursor when done.<br>
+5.To work with cursors you must use the following SQL statements.<br>
+
+This section introduces the ways the SQL:2003 standard defines how to use cursors in applications in embedded SQL. Not all application bindings for relational database systems adhere to that standard, and some (such as CLI or JDBC) use a different interface.<br>
+
+A programmer makes a cursor known to the DBMS by using a DECLARE ... CURSOR statement and assigning the cursor a (compulsory) name:<br>
+
+ DECLARE cursor_name CURSOR IS SELECT ... FROM ...<br>
+Before code can access the data, it must open the cursor with the OPEN statement. Directly following a successful opening, the cursor is positioned before the first row in the result set.<br>
+<br>
+ OPEN cursor_name<br>
+Applications position cursors on a specific row in the result set with the FETCH statement. A fetch operation transfers the data of the row into the application.<br>
+<br>
+ FETCH cursor_name INTO ...<br>
+                <br>
+Once an application has processed all available rows or the fetch operation is to be positioned on a non-existing row (compare scrollable cursors below), the DBMS returns a SQLSTATE '02000' (usually accompanied by an SQLCODE +100) to indicate the end of the result set.<br>
+<br>
+The final step involves closing the cursor using the CLOSE statement:<br>
+<br>
+ CLOSE cursor_name<br>
+After closing a cursor, a program can open it again, which implies that the DBMS re-evaluates the same query or a different query and builds a new result set.<br>
+<br>
+Scrollable cursors:<br>
+Programmers may declare cursors as scrollable or not scrollable. The scrollability indicates the direction in which a cursor can move.<br>
+
+With a non-scrollable (or forward-only) cursor, you can FETCH each row at most once, and the cursor automatically moves to the next row. After you fetch the last row, if you fetch again, you will put the cursor after the last row and get the following code: SQLSTATE 02000 (SQLCODE +100).<br>
+                <br>
+
+A program may position a scrollable cursor anywhere in the result set using the FETCH SQL statement. The keyword SCROLL must be specified when declaring the cursor. The default is NO SCROLL, although different language bindings like JDBC may apply a different default.<br>
+<br>
+ DECLARE cursor_name sensitivity SCROLL CURSOR FOR SELECT ... FROM ...<br>
+<br>
+The target position for a scrollable cursor can be specified relatively (from the current cursor position) or absolutely (from the beginning of the result set).<br>
+<br>
+ FETCH [ NEXT | PRIOR | FIRST | LAST ] FROM cursor_name<br>
+ FETCH ABSOLUTE n FROM cursor_name<br>
+ FETCH RELATIVE n FROM cursor_name;<br>
+                <br>
+Scrollable cursors can potentially access the same row in the result set multiple times. Thus, data modifications (insert, update, delete operations) from other transactions could affect the result set. A cursor can be SENSITIVE or INSENSITIVE to such data modifications. A sensitive cursor picks up data modifications affecting the result set of the cursor, and an insensitive cursor does not. Additionally, a cursor may be INSENSITIVE, in which case the DBMS tries to apply sensitivity as much as possible.<br>
+<br>
+"WITH HOLD"<br>
+Cursors are usually closed automatically at the end of a transaction, i.e. when a COMMIT or ROLLBACK (or an implicit termination of the transaction) occurs. That behavior can be changed if the cursor is declared using the WITH HOLD clause (the default is WITHOUT HOLD). A holdable cursor is kept open over COMMIT and closed upon ROLLBACK. (Some DBMS deviate from this standard behavior and also keep holdable cursors open over ROLLBACK.)<br>
+<br>
+ DECLARE  cursor_name CURSOR  WITH HOLD  FOR SELECT .... FROM ....<br>
+When a COMMIT occurs, a holdable cursor is positioned before the next row. Thus, a positioned UPDATE or positioned DELETE statement will only succeed after a FETCH operation occurred first in the transaction.<br>
+<br>
+Note that JDBC defines cursors as holdable per default. This is done because JDBC also activates auto-commit per default.<br>
+
+Positioned update/delete statements:
+Cursors can not only be used to fetch data from the DBMS into an application but also to identify a row in a table to be updated or deleted. The SQL:2003 standard defines positioned update and positioned delete SQL statements for that purpose. Such statements do not use a regular WHERE clause with predicates. Instead, a cursor identifies the row. The cursor must be opened and already positioned on a row by means of FETCH statement.<br>
+                <br>
+
+ UPDATE table_name<br>
+ SET    ...<br>
+ WHERE  CURRENT OF cursor_name<br>
+ DELETE<br>
+ FROM   table_name<br>
+ WHERE  CURRENT OF cursor_name<br>
+The cursor must operate on an updatable result set in order to successfully execute a positioned update or delete statement. Otherwise, the DBMS would not know how to apply the data changes to the underlying tables referred to in the cursor.<br>
+<br>
+Cursors in distributed transactions:<br>
+Using cursors in distributed transactions (X/Open XA Environments), which are controlled using a transaction monitor, is no different from cursors in non-distributed transactions.<br>
+
+One has to pay attention when using holdable cursors, however. Connections can be used by different applications. Thus, once a transaction has been ended and committed, a subsequent transaction (running in a different application) could inherit existing holdable cursors. Herefore, an application developer has to be aware of that situation.<br>
+<br>
+Cursors in XQuery:<br>
+The XQuery language allows cursors to be created using the subsequence() function.<br>
+
+The format is:<br>
+<br>
+let $displayed-sequence := subsequence($result, $start, $item-count)
+Where $result is the result of the initial XQuery, $start is the item number to start and $item-count is the number of items to return.<br>
+<br>
+Equivalently this can also be done using a predicate:<br>
+<br>
+let $displayed-sequence := $result[$start to $end]<br>
+Where $end is the end sequence.<br>
+<br>
+For complete examples see the  XQuery/Searching,Paging and Sorting#Paging at Wikibooks.<br>
+<br>
+Disadvantages of cursors:<br>
+The following information may vary depending on the specific database system.<br>
+
+Fetching a row from the cursor may result in a network round trip each time. This uses much more network bandwidth than would ordinarily be needed for the execution of a single SQL statement like DELETE. Repeated network round trips can severely reduce the speed of the operation using the cursor. Some DBMSs try to reduce this effect by using block fetch. Block fetch implies that multiple rows are sent together from the server to the client. The client stores a whole block of rows in a local buffer and retrieves the rows from there until that buffer is exhausted.<br>
+
+Cursors allocate resources on the server, such as locks, packages, processes, and temporary storage. For example, Microsoft SQL Server implements cursors by creating a temporary table and populating it with the query's result set. If a cursor is not properly closed (deallocated), the resources will not be freed until the SQL session (connection) itself is closed. This wasting of resources on the server can lead to performance degradations and failures.<br>
+<br>
+                <br>
+Example<br>
+EMPLOYEES TABLE<br>
+<br>
+SQL> desc EMPLOYEES_DETAILS;<br>
+ Name                                      Null?    Type<br>
+ ----------------------------------------- -------- --------------------<br>
+<br>
+ EMPLOYEE_ID                               NOT NULL NUMBER(6)<br>
+ FIRST_NAME                                         VARCHAR2(20)<br>
+ LAST_NAME                                 NOT NULL VARCHAR2(25)<br>
+ EMAIL                                     NOT NULL VARCHAR2(30)<br>
+ PHONE_NUMBER                                       VARCHAR2(20)<br>
+ HIRE_DATE                                 NOT NULL DATE<br>
+ JOB_ID                                    NOT NULL VARCHAR2(10)<br>
+ SALARY                                             NUMBER(8,2)<br>
+ COMMISSION_PCT                                     NUMBER(2,2)<br>
+ MANAGER_ID                                         NUMBER(6)<br>
+ DEPARTMENT_ID                                      NUMBER(4)<br>
+SAMPLE CURSOR KNOWN AS EE<br>
+<br>
+CREATE OR REPLACE <br>
+PROCEDURE EE AS<br>
+BEGIN<br>
+<br>
+DECLARE<br>
+	v_employeeID EMPLOYEES_DETAILS.EMPLOYEE_ID%TYPE;<br>
+	v_FirstName EMPLOYEES_DETAILS.FIRST_NAME%TYPE;<br>
+	v_LASTName EMPLOYEES_DETAILS.LAST_NAME%TYPE;<br>
+	v_JOB_ID EMPLOYEES_DETAILS.JOB_ID%TYPE:= 'IT_PROG';<br>
+<br>
+Cursor c_EMPLOYEES_DETAILS IS<br>
+	SELECT EMPLOYEE_ID, FIRST_NAME, LAST_NAME<br>
+	FROM EMPLOYEES_DETAILS<br>
+	WHERE JOB_ID ='v_JOB_ID';<br>
+<br>
+BEGIN<br>
+	OPEN c_EMPLOYEES_DETAILS;<br>
+<br>
+	LOOP<br>
+<br>
+		FETCH c_EMPLOYEES_DETAILS INTO v_employeeID,v_FirstName,v_LASTName;<br>
+<br>
+		DBMS_OUTPUT.put_line(v_employeeID);<br>
+		DBMS_OUTPUT.put_line(v_FirstName);<br>
+		DBMS_OUTPUT.put_line(v_LASTName)<br>;
+<br>
+		EXIT WHEN c_EMPLOYEES_DETAILS%NOTFOUND;<br>
+	END LOOP;<br>
+<br>
+	CLOSE c_EMPLOYEES_DETAILS;<br>
+END;<br>
+<br>
+END;<br>
+            </p>
+        </div>
+    </body>
+</html>
+    
